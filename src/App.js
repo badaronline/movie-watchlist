@@ -1,15 +1,15 @@
 import React from "react";
 import Home from "./components/Home";
 import Watchlist from "./components/Watchlist";
-import { BrowserRouter, Route, Routes as Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MovieDetails from "./components/MovieDetails";
 import { FavoritesProvider } from "./context/FavoriteMovies";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <div>
-        <Switch>
+        <Routes>
           <Route
             path="/"
             element={
@@ -34,9 +34,9 @@ const App = () => {
               </FavoritesProvider>
             }
           />
-        </Switch>
+        </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 
