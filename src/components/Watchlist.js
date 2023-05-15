@@ -25,6 +25,40 @@ const Watchlist = () => {
     fetchMovies();
   }, [favorites]);
 
+  const renderMovieCards = () => {
+    if (favorites.length === 0) {
+      return (
+        <p className="empty--list">
+          You have no movies added to your watchlist yet{" "}
+          <Link to="/" className="empty--link">
+            Add movies
+          </Link>
+        </p>
+      );
+    }
+
+    return myMovies.map((item, index) => (
+      <div className="movie-card" key={index}>
+        <Link to={`/movies/${item.id}`}>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+            alt={item.title}
+          />
+        </Link>
+
+        <div className="movie-details">
+          <p className="movie-title">{item.title}</p>
+          <button
+            className="movie--details--button"
+            onClick={() => toggleFavorite(item.id)}
+          >
+            Delete movie
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div className="watchlist">
       <div className="top">
@@ -34,36 +68,7 @@ const Watchlist = () => {
       </div>
       <div className="watchlist--section">
         <p className="my--movies">My movies</p>
-        <div className="container">
-          {favorites.length === 0 && (
-            <p className="empty--list">
-              You have no movies added to your watchlist yet{" "}
-              <Link to="/" className="empty--link">
-                Add movies
-              </Link>
-            </p>
-          )}
-          {myMovies.map((item, index) => (
-            <div className="movie-card" key={index}>
-              <Link to={`/movies/${item.id}`}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                  alt={item.title}
-                />
-              </Link>
-
-              <div className="movie-details">
-                <p className="movie-title">{item.title}</p>
-                <button
-                  className="movie--details--button"
-                  onClick={() => toggleFavorite(item.id)}
-                >
-                  Delete movie
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="container">{renderMovieCards()}</div>
       </div>
     </div>
   );

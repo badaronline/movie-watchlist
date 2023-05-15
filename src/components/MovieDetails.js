@@ -1,40 +1,41 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MyMovieContext } from "../context/FavoriteMovies";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
-  const { favorites, toggleFavorite } = useContext(MyMovieContext);
-  const isFavorite = favorites.includes(parseInt(id));
   const [trailer, setTrailer] = useState(false);
   const [trailerLink, setTrailerLink] = useState("");
+
+  const { favorites, toggleFavorite } = useContext(MyMovieContext);
+  const isFavorite = favorites.includes(parseInt(id));
   const [added, setAdded] = useState(isFavorite);
 
   useEffect(() => {
     const apiKey = process.env.REACT_APP_API_KEY;
-    const Fetch = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
-      );
-      const data = await response.json();
-      setMovie(data);
+    const fetchMovieDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+        );
+        const data = await response.json();
+        setMovie(data);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
     };
 
-    Fetch();
-
-    const trailerFetch = async () => {
+    const fetchTrailer = async () => {
       try {
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}`
         );
         const data = await response.json();
-
         const trailer = data.results.find((video) => video.type === "Trailer");
         if (trailer) {
           // construct URL for trailer on YouTube
           const trailerUrl = `https://www.youtube.com/watch?v=${trailer.key}`;
-          // console.log(trailerUrl);
           setTrailerLink(trailerUrl);
           setTrailer(true);
         }
@@ -42,23 +43,24 @@ const MovieDetails = () => {
         console.error("Error fetching movie videos:", error);
       }
     };
-    trailerFetch();
+    fetchMovieDetails();
+    fetchTrailer();
   }, [id]);
 
-  // If movie not found, show error message
-  if (!movie) {
-    return <div>Error: Movie not found</div>;
-  }
   const getPosterURL = (posterpath) => {
     return `https://www.themoviedb.org/t/p/w220_and_h330_face/${posterpath}`;
   };
 
   const handleClick = (e) => {
-    // console.log("clicked");
     const movieId = parseInt(e.target.getAttribute("data-id"));
     toggleFavorite(movieId);
     setAdded((prev) => !prev);
   };
+
+  // If movie not found, show error message
+  if (!movie) {
+    return <div>Error: Movie not found</div>;
+  }
 
   return (
     <>

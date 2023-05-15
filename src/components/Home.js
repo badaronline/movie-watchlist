@@ -6,24 +6,22 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const { favorites } = useContext(MyMovieContext);
   const [selectedGenre, setSelectedGenre] = useState("");
-  const [isloading, setIsLoading] = useState(false);
-  const [errorFetch, setErrorFetch] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorFetch, setErrorFetch] = useState(false);
 
-  const Fetch = async (url) => {
+  const fetchMovies = async (url) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
       // filter movies that do not have images out
       const filteredMovies = data.results.filter((movie) => movie.poster_path);
       setMovies(filteredMovies);
-      // setMovies(data.results || data);
       if (data.results.length === 0) {
         setIsLoading(false);
-        setErrorFetch(true)
+        setErrorFetch(true);
       }
-      // console.log(data.results);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
   };
 
@@ -35,17 +33,17 @@ const Home = () => {
     if (selectedGenre) {
       apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${selectedGenre}`;
     }
-    Fetch(apiUrl);
+    fetchMovies(apiUrl);
   }, [selectedGenre]);
 
   const handleSearchClick = () => {
     const movieInput = document.getElementById("movie");
     const movieName = movieInput.value;
     setIsLoading(true);
-    setMovies([])
+    setMovies([]);
     const apiKey = process.env.REACT_APP_API_KEY;
-    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieName}`
-    Fetch(apiUrl);
+    const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieName}`;
+    fetchMovies(apiUrl);
   };
 
   const handleGenreChange = (event) => {
@@ -66,7 +64,11 @@ const Home = () => {
       <div className="header">
         <div className="top">
           <div className="top--left">
-            <Link to="/" className="top-link">
+            <Link
+              to="/"
+              onClick={() => setSelectedGenre("")}
+              className="top-link"
+            >
               <p>MyMovies</p>
             </Link>
             <select value={selectedGenre} onChange={handleGenreChange}>
@@ -117,11 +119,15 @@ const Home = () => {
               </div>
             </div>
           ))
-        ) : // input search error
-        isloading ? (
-          <p className="empty--list">loading...</p>
         ) : (
-          errorFetch && <p className="empty--list">Sorry, Please input a valid key word!</p>
+          // input search error
+          <p className="empty--list">
+            {isLoading
+              ? "Loading..."
+              : errorFetch
+              ? "Sorry, please input a valid keyword!"
+              : "No movies found."}
+          </p>
         )}
       </div>
     </div>

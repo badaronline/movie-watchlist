@@ -5,25 +5,24 @@ export const MyMovieContext = createContext([]);
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState(() => {
     const storedFavorites = localStorage.getItem("favorites");
-
     return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
+
   const toggleFavorite = (id) => {
-    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    favorites = favorites.map(Number)
-  
-    if (favorites.includes(id)) {
+    let favoritesArray = JSON.parse(localStorage.getItem("favorites")) || [];
+    favoritesArray = favoritesArray.map(Number);
+
+    if (favoritesArray.includes(id)) {
       // Remove id if it already exists in favorites
-      favorites = favorites.filter((favoriteId) => favoriteId !== id);
+      favoritesArray = favoritesArray.filter((favoriteId) => favoriteId !== id);
     } else {
       // Add id to favorites if it doesn't exist
-      favorites.push(id);
+      favoritesArray.push(id);
     }
-  
+
     localStorage.setItem("favorites", JSON.stringify(favorites));
-    setFavorites(favorites);
+    setFavorites(favoritesArray);
   };
-  
 
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
