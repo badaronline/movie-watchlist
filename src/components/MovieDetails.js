@@ -12,7 +12,7 @@ const MovieDetails = () => {
   const [added, setAdded] = useState(isFavorite);
 
   useEffect(() => {
-    const apiKey = "2fa05264aad5c6b8099697d6dff7fc32";
+    const apiKey = process.env.REACT_APP_API_KEY;
     const Fetch = async () => {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`

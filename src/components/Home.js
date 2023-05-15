@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const apiKey = "2fa05264aad5c6b8099697d6dff7fc32";
+    const apiKey = process.env.REACT_APP_API_KEY;
     let apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
 
     // if genre id is selected, update the apiUrl with genre id as a query parameter
@@ -43,7 +43,7 @@ const Home = () => {
     const movieName = movieInput.value;
     setIsLoading(true);
     setMovies([])
-    const apiKey = "2fa05264aad5c6b8099697d6dff7fc32";
+    const apiKey = process.env.REACT_APP_API_KEY;
     const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieName}`
     Fetch(apiUrl);
   };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { MyMovieContext } from "../context/FavoriteMovies";
 
-const apiKey = "2fa05264aad5c6b8099697d6dff7fc32";
+const apiKey = process.env.REACT_APP_API_KEY;
 const API_URL = "https://api.themoviedb.org/3/movie/";
 
 const Watchlist = () => {
