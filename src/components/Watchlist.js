@@ -10,7 +10,7 @@ const Watchlist = () => {
   const [myMovies, setMyMovies] = useState([]);
 
   useEffect(() => {
-    // Fetch movie details for each ID in savedArray
+    // Fetch movies details for each ID in savedArray
     const fetchMovies = async () => {
       const movieDetails = await Promise.all(
         favorites.map(async (id) => {
@@ -63,11 +63,11 @@ const Watchlist = () => {
     <div className="watchlist">
       <div className="top">
         <Link to="/" className="top-link">
-          <p>Home</p>
+          <p>MyMovies</p>
         </Link>
       </div>
       <div className="watchlist--section">
-        <p className="my--movies">My movies</p>
+        <p className="my--movies">Added Movies</p>
         <div className="container">{renderMovieCards()}</div>
       </div>
     </div>

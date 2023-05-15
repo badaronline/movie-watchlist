@@ -192,7 +192,7 @@ body {
 }
 
 .detail-page--container img {
-  min-height: 600px;
+  min-height: 70vh;
   border-radius: 5px;
 
 }

@@ -125,7 +125,7 @@ const Home = () => {
             {isLoading
               ? "Loading..."
               : errorFetch
-              ? "Sorry, please input a valid keyword!"
+              ? "Please search a valid movie name!"
               : "No movies found."}
           </p>
         )}
