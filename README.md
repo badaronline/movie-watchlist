@@ -5,15 +5,18 @@ This project was an assignment and bootstrapped with [Create React App](https://
 
 ## File Structure
 The main files in the React app are organized as follows:
-- index.js
-- index.css
-- App.js
+- public
+  - index.html
+- src
   - components
     - Home.js
     - Watchlist.js
     - MovieDetails.js
   - context
     - FavoriteMovies.js
+  - App.js
+  - index.css
+  - index.js
 * index.js: The entry point of the application where the React app is rendered to the DOM.
 * index.css: The CSS file for the root component.
 * App.js: The main component that acts as a router and contains the routes for different pages.
