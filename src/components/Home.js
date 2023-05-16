@@ -11,17 +11,18 @@ const Home = () => {
 
   const fetchMovies = async (url) => {
     try {
+      setIsLoading(true);
       const response = await fetch(url);
       const data = await response.json();
+      setIsLoading(false);
       // filter movies that do not have images out
       const filteredMovies = data.results.filter((movie) => movie.poster_path);
       setMovies(filteredMovies);
-      if (data.results.length === 0) {
-        setIsLoading(false);
-        setErrorFetch(true);
-      }
+      setErrorFetch(filteredMovies.length === 0);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+      setErrorFetch(true);
     }
   };
 
@@ -108,8 +109,8 @@ const Home = () => {
       {/* movie display section */}
       <div className="container">
         {movies.length > 0 ? (
-          movies.map((item, index) => (
-            <div className="movie-card" key={index}>
+          movies.map((item) => (
+            <div className="movie-card" key={item.id}>
               <Link to={`/movies/${item.id}`}>
                 <img src={getPosterURL(item.poster_path)} alt={item.title} />
               </Link>

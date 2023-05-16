@@ -2,14 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { MyMovieContext } from "../context/FavoriteMovies";
 
-const apiKey = process.env.REACT_APP_API_KEY;
-const API_URL = "https://api.themoviedb.org/3/movie/";
-
 const Watchlist = () => {
   const { favorites, toggleFavorite } = useContext(MyMovieContext);
   const [myMovies, setMyMovies] = useState([]);
 
   useEffect(() => {
+    const apiKey = process.env.REACT_APP_API_KEY;
+    const API_URL = "https://api.themoviedb.org/3/movie/";
     // Fetch movies details for each ID in savedArray
     const fetchMovies = async () => {
       const movieDetails = await Promise.all(
@@ -37,8 +36,8 @@ const Watchlist = () => {
       );
     }
 
-    return myMovies.map((item, index) => (
-      <div className="movie-card" key={index}>
+    return myMovies.map((item) => (
+      <div className="movie-card" key={item.id}>
         <Link to={`/movies/${item.id}`}>
           <img
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
