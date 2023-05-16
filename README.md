@@ -1,7 +1,8 @@
 # MyMovies Watchlist React App
 
 The Movie Watchlist App is a React-based application that allows users to browse and search for their favorite movies, create a personalized watchlist, and discover detailed information about each movie.
-This project was an assignment and bootstrapped with [Create React App](https://github.com/facebook/create-react-app). The app fetch data from TMDB API.
+This project was an assignment and bootstrapped with [Create React App](https://github.com/facebook/create-react-app). The app fetch data from [TMDB](https://developer.themoviedb.org/).
+
 The web version of this project can be seen on [Netlify](https://mymovies-watchlist.netlify.app/).
 
 ## File Structure
