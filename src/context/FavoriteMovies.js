@@ -20,7 +20,6 @@ export const FavoritesProvider = ({ children }) => {
       favoritesArray.push(id);
     }
 
-    // localStorage.setItem("favorites", JSON.stringify(favorites));
     setFavorites(favoritesArray);
   };
 
