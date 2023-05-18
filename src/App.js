@@ -9,32 +9,13 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <FavoritesProvider>
-                <Home />
-              </FavoritesProvider>
-            }
-          />
-          <Route
-            path="/fav"
-            element={
-              <FavoritesProvider>
-                <Watchlist />
-              </FavoritesProvider>
-            }
-          />
-          <Route
-            path="/movies/:id"
-            element={
-              <FavoritesProvider>
-                <MovieDetails />
-              </FavoritesProvider>
-            }
-          />
-        </Routes>
+        <FavoritesProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/fav" element={<Watchlist />} />
+            <Route path="/movies/:id" element={<MovieDetails />} />
+          </Routes>
+        </FavoritesProvider>
       </div>
     </Router>
   );
